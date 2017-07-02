@@ -1,0 +1,9 @@
+﻿{
+  "SourceFile": "./bibliography.bib",
+  "FinalFile": "./btest.bib",
+  "ReplacingCharactarsDictionary": {
+    "%": "\\%",
+    "_": "\\_",
+    "&": "\\&"
+  }
+}
