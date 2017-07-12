@@ -15,7 +15,7 @@ namespace ModifyBibtex
         public string ReadFile(IToolProperty currentProperty)
         {
             string input = string.Empty;
-            FileStream fileStream = new FileStream(currentProperty._sourceFile, mode: FileMode.Open);
+            FileStream fileStream = new FileStream(currentProperty.SourceFile, mode: FileMode.Open);
             using (StreamReader reader = new StreamReader(stream: fileStream))
             {
                input = reader.ReadToEnd();

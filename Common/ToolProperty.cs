@@ -11,8 +11,8 @@ namespace ModifyBibtex
     {
         private static readonly string _defaultJsonSettings =
             "{\r\n  \"SourceFile\": \"./\\bibliography.bib\",\r\n  \"FinalFile\": \"./\\btest.bib\",\r\n  \"ReplacingCharactarsDictionary\": {\r\n    \"%\": \"\\\\%\",\r\n    \"_\": \"\\\\_\",\r\n    \"&\": \"\\\\&\"\r\n  }\r\n}";
-        public string _sourceFile { get; set; }
-        public string _finalFile { get; set; }
+        public string SourceFile { get; set; }
+        public string FinalFile { get; set; }
         public IDictionary<string, string> ReplacingCharactarsDictionary { get ; set; }
 
         public void Initial()
@@ -36,8 +36,8 @@ namespace ModifyBibtex
                 generatedSettings = JsonConvert.DeserializeObject<ToolProperty>(_defaultJsonSettings);
                 throw;
             }
-            _finalFile = generatedSettings._finalFile;
-            _sourceFile = generatedSettings._sourceFile;
+            FinalFile = generatedSettings.FinalFile;
+            SourceFile = generatedSettings.SourceFile;
             ReplacingCharactarsDictionary = generatedSettings.ReplacingCharactarsDictionary;
         }
     }

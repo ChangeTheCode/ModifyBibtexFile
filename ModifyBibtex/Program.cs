@@ -18,14 +18,21 @@ namespace ModifyBibtex
 
             _currenToolProperties = new ToolProperty();
 
-            _currenToolProperties.Initial();
-
+            try
+            {
+                _currenToolProperties.Initial();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+  
             ModifyController readWriteController = new ModifyController();
             var fileInput = readWriteController.ReadFile(_currenToolProperties);
 
             var listOfEnties = readWriteController.CreateListOfBibItemsFormString(_currenToolProperties, fileInput);
 
-            readWriteController.WriteToFile(_currenToolProperties._finalFile, listOfEnties);
+            readWriteController.WriteToFile(_currenToolProperties.FinalFile, listOfEnties);
             Console.WriteLine(value: "Program has finished, file is written! ");
             Console.WriteLine(value: "Press any key to exit ... ");
             Console.ReadLine();

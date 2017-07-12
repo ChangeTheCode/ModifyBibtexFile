@@ -47,13 +47,12 @@ namespace ModifyBibtex
         #region private functions
         private int SplitFirstStringPartTillFindUrl(string[] firstSplit, int index)
         {
-             // i is needed in both loops, otherwise it writes stuff twice 
             for ( index= 2; index < firstSplit.Length; index++)
             {
                 if (firstSplit[index].Contains("url ="))
                 {
                     URL = firstSplit[index++];
-                    break; // if the url was found we break this loop and we add all entries at the tail
+                    break; // if the url was found we break this loop and we add all entries to the tail
                 }
                 else
                 {
