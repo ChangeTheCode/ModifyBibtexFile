@@ -23,9 +23,9 @@ namespace ModifyBibtex
             ModifyController readWriteController = new ModifyController();
             var fileInput = readWriteController.ReadFile(_currenToolProperties);
 
-            var listOfEnties = readWriteController.CreateBibItemsFormString(_currenToolProperties, fileInput);
+            var listOfEnties = readWriteController.CreateListOfBibItemsFormString(_currenToolProperties, fileInput);
 
-            readWriteController.WriteToFile(_currenToolProperties, listOfEnties);
+            readWriteController.WriteToFile(_currenToolProperties._finalFile, listOfEnties);
             Console.WriteLine(value: "Program has finished, file is written! ");
             Console.WriteLine(value: "Press any key to exit ... ");
             Console.ReadLine();

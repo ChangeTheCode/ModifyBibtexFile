@@ -1,25 +1,21 @@
 ﻿using Common;
-using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
+
 
 namespace ModifyBibtex
 {
     public class ModifyController
     {
-        
         /// <summary>
-        /// This function read a file of typ bib and return a list of IBibItems 
+        /// Read file retrun whole file content as a string
         /// </summary>
-        /// <param name="currentProperty"> Current Tool Properties to be able to localze the file  </param>
-        /// <returns> List<IBibItems> which contains all bib entries of the file </IBibItems> </returns>
+        /// <param name="currentProperty"></param>
+        /// <returns>String with file content</returns>
         public string ReadFile(IToolProperty currentProperty)
         {
             string input = string.Empty;
-            FileStream fileStream = new FileStream(currentProperty.SourceFile, mode: FileMode.Open);
+            FileStream fileStream = new FileStream(currentProperty._sourceFile, mode: FileMode.Open);
             using (StreamReader reader = new StreamReader(stream: fileStream))
             {
                input = reader.ReadToEnd();
@@ -27,31 +23,42 @@ namespace ModifyBibtex
             return input;
         }
 
-        public List<IBibItem> CreateBibItemsFormString(IToolProperty currentProperty, string line)
+        /// <summary>
+        /// Create a list of IBibItems from raw data as a string
+        /// </summary>
+        /// <param name="currentProperty">CurrentToolProperties to get specific signs to replace </param>
+        /// <param name="line">Raw string with all Bibitems as a string </param>
+        /// <returns>IList<IBibItems> </IBibItems></returns>
+        public IList<IBibItem> CreateListOfBibItemsFormString(IToolProperty currentProperty, string line)
         {
             var seperatItems = line.Split('@');
             var allItems = new List<IBibItem>();
             foreach (var singleItem in seperatItems)
             {
-                allItems.Add(item: new BibItem(singleItem, currentProperty.ReplacingCharactarsDictionary));
+                var tempItem = new BibItem();
+                tempItem.SetImportentFields(singleItem, currentProperty.ReplacingCharactarsDictionary);
+                allItems.Add(tempItem);
             }
             return allItems;
         }
 
-        public void WriteToFile(IToolProperty currentFileProperties, List<IBibItem> completlyList)
+        /// <summary>
+        /// Write information to specific file as bib typ 
+        /// </summary>
+        /// <param name="currentFileProperties">destination path from the file </param>
+        /// <param name="completeList">Whole list, with all Bibitem from the original file</param>
+        public void WriteToFile(string currentPath, IList<IBibItem> completeList)
         {
-            FileStream neFile =
-                            new FileStream(currentFileProperties.FinalFile, mode: FileMode.OpenOrCreate);
-            using (StreamWriter writer = new StreamWriter(stream: neFile))
+            FileStream writeFile =
+                            new FileStream(currentPath, mode: FileMode.OpenOrCreate);
+            using (StreamWriter writer = new StreamWriter(stream: writeFile))
             {
-                foreach (var singleBibItem in completlyList)
+                foreach (var singleBibItem in completeList)
                 {
                     writer.WriteLine(value: singleBibItem.ToString());
                 }
             }
         }
-
-        
 
     }
 }

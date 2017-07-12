@@ -6,8 +6,8 @@ namespace Common
 {
     public interface IToolProperty
     {
-        string SourceFile { get; set; }
-        string FinalFile { get; set; }
+        string _sourceFile { get; set; }
+        string _finalFile { get; set; }
         IDictionary<string, string> ReplacingCharactarsDictionary { get; set; }
         void Initial();
     }
